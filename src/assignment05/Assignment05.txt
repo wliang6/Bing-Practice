@@ -1,0 +1,83 @@
+Assignment 5
+DUE DATE THURSDAY 13th AT 11:59pm
+ 
+The package is assignment05. The code in the first 3 questions goes inside the class Question1.
+ 
+In answer to the question: "Should we consider null or empty strings when writing methods for #1, #2, and #3?" The answer is: you should. Let's say it is false that null is a permutation of null but it is true that the empty string is a permutation of an empty string. You can decide what the other methods need to do in order to have the three permutation methods provide this behavior.
+ 
+1. Write a support method "counter," as outlined below, for
+public static boolean permutation1(String s1, String s2) {
+    return Arrays.equals(counter(s1), counter(s2));
+}
+which checks if s1 is a permutation of s2, ignoring punctuation and upper and lower case following the following description of counters.
+ 
+The method counter returns an int[] array of length 26, which counts how many of each letter appears in a String: to write counter(String s) you should set s = s.toLowerCase() and build the return array so that the element at index ch - 'a' is the number of times the letter ch occurs in s. Note that to check ch is a letter, use ch >= 'a' && ch <= 'z'. You can use for(char ch : s.toCharArray()) to loop through the String s or you can use a counting for loop and use s.charAt(i).
+ 
+In the main method System.out.println(permutation1("Here's the cinema", "The Iceman's here"));should print true. System.out.println(permutation1("Here's the machine", "The Iceman's here")); should print false.
+ 
+2. Write the method public static int count(char c, String s) that counts how many times the char cappears in s. You can use for(char ch : s.toCharArray()) and count how many times ch == c.
+ 
+Write the method public static boolean permutation2(String s1, String s2), which returns the same value as permutation1. First convert s1 and s2 to lower case as above. Start with a boolean return value that is true and for each c in the loop for(char c = 'a'; c <= 'z'; c++) change the return value to false if the count values forc in s1 and s2 differ.
+ 
+In the main method System.out.println(permutation2("Here's the cinema", "The Iceman's here"));should print true. System.out.println(permutation2("Here's the machine", "The Iceman's here")); should print false.
+ 
+3. Inside the class Question1 include the class MyChCounter, which we will discuss later when we introduce overridingequals:
+ 
+static class MyChCounter {
+    char c;
+    int count = 1;
+    MyChCounter(char c1) {
+        c = c1;
+    }
+    void increment() {
+        count++;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        boolean retVal = false;
+        if(obj != null && getClass() == obj.getClass()) {
+            MyChCounter m = (MyChCounter)obj;
+            retVal = (c == m.c && count == m.count);
+        }
+        return retVal;
+    }        
+    @Override
+    public int hashCode() {
+        return Character.hashCode(c)*31 + Integer.hashCode(count);
+    }
+}
+ 
+Java Map is like Python dictionary. We will use two Maps:
+ 
+Map<Character, MyChCounter> counter1 = new TreeMap<>();
+Map<Character, MyChCounter> counter2 = new TreeMap<>()
+ 
+We can use TreeMap, when the set of keys (Character in this case) is Comparable. The methods we need arecounter1.put(c, new MyChCounter(c)) for a char c and the get(c) method. Look at the put and get andcontainsKey methods in https://docs.oracle.com/javase/8/docs/api/java/util/Map.html.
+ 
+Write the method public static boolean permutation3(String s1, String s2), which returns the same value as permutation1.In the method convert s1 and s2 to lower case as above. Declare the Maps counter1 andcounter2 as above.
+ 
+For each char c in s1, use if(Character.isLetter(c)) to check we have a letter and then if that is true useif(counter1.containsKey(c)) to check if we already saw c before; if we did, call increment() oncounter1.get(c), else put c in the Map as a key using counter1.put(c, new MyChCounter(c)). Look at the code of MyChCounter above to see that it is set up to count this first c once.
+ 
+Populate counter2 in the same way by looping through each c in s2.
+ 
+Return counter1.equals(counter2), which makes heavy use of hashCode and equals in MyChCounter--but that is hidden in the equals method of TreeMap.
+ 
+In the main method System.out.println(permutation3("Here's the cinema", "The Iceman's here"));should print true. System.out.println(permutation3("Here's the machine", "The Iceman's here")); should print false.
+ 
+I am going to prepare the GUI for the Game of Life. You can read about the Game of Life in Section 7.6.3 and Problem P7.10 of the textbook, see https://en.wikipedia.org/wiki/John_Horton_Conway andhttps://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+ 
+Find and download the three classes CellGrid.java, LifePanel.java, and GraphDialogSetup.java on Blackboard under Content->Code->Assignment 5 Game of Life.
+ 
+You "only" have to implement the method public void applyUpdate() that is provided in CellGrid but is currently empty. It is an exercise in nested for loops and boolean && operators in the if statements.
+ 
+In the method create a 2-dimensional int array that is the same size as cells. In a nested loop calculated the number of neighbors of cells[i][j] that are true. Use the nested loop to do that for every i and j.  Mostly there are 8 neighbors, where the i and j differ by up to 1. Our textbook has a diagram on Page 338. On the sides and corners there are 5 and 3 neighbors respectively. You can deal with all these situations by check i > 1 before considering cells[i-1][*], i < maxRows - 1 before considering cells[i+1][*], (* is j-1, j, or j+1) and similarly for j and maxColumns.
+ 
+AFTER this counting array is complete, start changing cells. In a nest loop, visit every cells[i][j]. Do not change its true/false value except in this situations: (i) change the value to true if it is currently false and there are exactly three neighbors that are true (birth), (ii) change the value to false if it is currently true and there are more than 3 neighbors that are true (death from starvation), and (iii) change the value to false if it is currently true and there are less than 2 neighbors that are true (death from loneliness).
+ 
+Run the program GraphDialogSetup. If the control dialog in the bottom right allows you to close the program, change Line 49 from
+ 
+graph.setSize(screenSize.width-100,screenSize.height-100);
+to
+graph.setSize(screenSize);
+ 
+There will be a video showing the behavior soon.

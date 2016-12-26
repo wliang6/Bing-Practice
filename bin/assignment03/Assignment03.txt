@@ -1,0 +1,228 @@
+The first question is a redo of part of Assignment 2-- a chance to clean up the original design:
+ 
+Create 2 packages assignment03 and resources. Implement all the code for the following class
+ 
+package assignment03;
+/**
+ * Class to manage money in dollars and cents
+ * 
+ * @author CS140
+ */
+public class DollarsAndCents {
+	//the fields are 
+	private final long DOLLARS;
+	private final int CENTS;	
+
+	/**
+	 * Constructor that initializes the dollars field to the given amount
+	 * @param dlrs The amount of the dollars in the new account. The parameter 
+	 * must be a long. If an int is provided a different constructor is 
+	 * called
+	 * @throws IllegalArgumentException if the parameter is negative
+	 */
+	public DollarsAndCents(long dlrs) {
+		if (dlrs < 0) throw new IllegalArgumentException("argument cannot be negative");
+		DOLLARS = dlrs;
+		CENTS = 0; // needed since CENTS is final
+	}
+
+	/**
+	 * Constructor that initializes the cents field to the given amount, or the 
+	 * dollars and cents if the number of cents is one dollar or more.
+	 * @param cts The amount of the cents in the new account. The parameter 
+	 * must be an int. If a long is provided a different constructor is 
+	 * called
+	 * @throws IllegalArgumentException if the parameter is negative
+	 */
+	public DollarsAndCents(int cts) {
+		if (cts < 0) throw new IllegalArgumentException("argument cannot be negative");
+		DOLLARS = cts/100;
+		CENTS = cts%100;
+	}
+	
+	/**
+	 * Constructor that initializes both the dollars and the cents field to 
+	 * the given amounts. The cents are adjusted to be less than one dollar.
+	 * @param dlrs The amount of dollars in the new account.  
+	 * @param cts The amount of the cents in the new account. if the number of 
+	 * cents exceeds a dollar, the excess dollars are added to the dollars field
+	 * and only the cents less than one dollar remain.
+	 * @throws IllegalArgumentException if either of the parameters is negative
+	 */
+	public DollarsAndCents(long dlrs, int cts) {
+// use the ideas from the previous constructors to see how to do this
+	}
+	
+	/**
+	 * A copy constructor that makes a new object with the same dollars and
+	 * cents values of the parameter
+	 * @param dc an object that provides the initial values of the fields
+	 * of the new object.
+	 */
+	public DollarsAndCents(DollarsAndCents dc) {
+// just copy the DOLLARS and CENTS values from dc. Even though the fields are private
+// you CAN access dc.DOLLARS and dc.CENTS
+	}
+	
+	/**
+	 * A no argument constructor that creates an object with both fields zero.
+	 */
+	public DollarsAndCents() {
+// set DOLLARS and CENTS to 0, final fields cannot be initialized since the constructor may
+// change them
+	}
+
+	/**
+	 * Return a new object with the dollars and cents that are the sum of
+	 * the fields the receiver and all the parameters. If the amount of cents exceeds 
+	 * one dollar the excess is passed to the dollars field. 
+	 * @param dcs a list of zero or more DollarsAndCents objects
+	 * @return a DollarsAndCents object with the sum of all the dollars and
+	 * cents in the receiver and the parameters. 
+	 */
+	public DollarsAndCents add(DollarsAndCents... dcs) {
+// note you treat dcs as an array
+// start with long localDlrs = DOLLARS and int localCts = CENTS and then
+// add the DOLLARS and CENTS from the dcs elements to those local
+// variables. Use these local variables to make the return value
+// the constructor will adjust the CENTS to be less than 100
+	}
+	
+//BY THE WAY, the following method suggests we should define an equals method but
+//we will do this when we have a chance to talk about the hashCode method
+	/**
+	 * Tests if this object is less than the parameter. Consider the
+	 * dollars and cents as money and test if this amount is less than
+	 * the parameter's amount
+	 * @param dc a DollarsAndCents object to be compared with this object
+	 * @return true if this object is less than the other object in 
+	 * terms of dollars and cents, otherwise false
+	 */
+	public boolean lessThan(DollarsAndCents dc) {
+// if dollars is less than dc.dollars the return value is true
+// if dollars is equal to dc.dollars then if cents is less
+// than dc.cents the return value is true
+// otherwise the return value is false
+	}
+	
+	/**
+	 * This could produce negative money, so an exception is thrown if the resulting
+	 * fields would be negative. Otherwise a new DollarsAndCents object is
+	 * returned with the parameter's dollars and cents values subtracted
+	 * from the receiver's fields 
+	 * @param dc a DollarsAndCents object with values that are subtracted
+	 * from the receiver to produce the new object
+	 * @return a DollarsAndCents object with fields that are the difference between
+	 * the receiver and the parameter
+	 * @throws IllegalArgumentException if the parameter is not less than
+	 * this object or has fields that are equal to this object 
+	 */
+	public DollarsAndCents subtract(DollarsAndCents dc) {
+// declare a DollarsAndCents return value initially null
+// if either of DOLLARS is different from dc.DOLLARS or CENTS is different
+// from dc.CENTS then throw an exception if(!dc.lessThan(this)) 
+// -- this means dc is not lessThan this object. 
+// Continue by defining local variables dlrs and cts equal to
+// DOLLARS - dc.DOLLARS and CENTS - dc.CENTS, respectively
+// adjust dlrs and cts to make cts positive if necessary.
+// the return value is set to a new object with arguments dlrs and cts
+// else it is a new object with its fields equal to 0.
+ 	}
+
+	/**
+	 * Returns a new object that based on the receiver's dollars and cents 
+	 * modified by a positive factor.
+	 * @param factor the multiplying factor for the new object 
+	 * @return a new object with fields that are the receiver's fields
+	 * modified by the factor 
+	 * @throws IllegalArgumentException if the factor is zero
+	 */
+	public DollarsAndCents upOrDown(double factor) {
+// This computation must be done with doubles
+// double temp = (d+c/100.0)*factor;
+// the return value will have (long)temp for dollars and
+// (int)Math.round((temp - (long)temp)*100) for cents;
+	}
+	
+	public String toString() {
+		// this is a method overridden from class Object
+		String retVal = "$" + DOLLARS;
+		if(CENTS < 10) {
+				retVal += ".0" + CENTS;
+		} else {
+				retVal += "." + CENTS;
+		}
+	}	
+}
+ 
+Write a separate test driver with tests for all the methods of DollarsAndCents.
+ 
+Download the class NamesResource.java from Blackboard Content->Code and put it in the resources package (I will fix the old Date generator later on).
+ 
+Create a class NameUtilities in assignment03. 
+ 
+In NameUtilities write the method public static int countFirstCharacters(char ch, String[] names) which counts how many Strings in the array names start with the char ch. You cannot assume anything about the upper or lower case of the parameters, so test everything in the same case. String has instance methods toLowerCase() and toUpperCase() and the class Character has static method toLowerCase(char ch) and toUpperCase(char ch). Null or empty Strings in the array are skipped. The return value is -1 if names is null or empty.
+ 
+In NameUtilities, write the method public static double averageLength(String[] names) which computes the average length of all the Strings in names. Null or empty Strings in the array are skipped. The return value is -1.0 if names is null or empty.
+ 
+The following method is mostly copied from the online resources for Horstmann's Big Java, Chapter 6.
+ 
+public static int countSyllables(String text) {
+	int count = 0;
+	int end = text.length() - 1;
+	if (end < 0) { 
+		return 0; 
+	} // The empty string has no syllables
+
+	// An e at the end of the word doesn't count as a vowel
+	char ch = text.charAt(end);
+	if (ch == 'e' || ch == 'E') {
+		end--; 
+	}
+
+	boolean insideVowelGroup = false;
+	for (int i = 0; i <= end; i++) {
+		ch = text.charAt(i);
+		String vowels = "aeiouyAEIOUY";
+		if (vowels.indexOf(ch) >= 0) {
+			// ch is a vowel
+			if (!insideVowelGroup) {
+				// Start of new vowel group
+				count++; 
+				insideVowelGroup = true;
+			}
+		} else {
+			insideVowelGroup = false;
+		}
+	}
+
+	// Every word has at least one syllable
+	if (count == 0) {
+		count = 1;
+	}
+
+	return count;      
+}
+ 
+In NameUtilities, write the method public static double averageNumberOfSyllables(String[] names) which computes the average of the number of syllables for all the Strings in names. Null or empty Strings in the array are skipped. The return value is -1.0 if names is null or empty.
+ 
+We are now going to do object-oriented polymorphic programming without going through Chapters 9 and 10.
+ 
+In package assignment03, make a class FirstCharAnalyzer with 2 private fields: a char and an ArrayList of String. Provide a constructor with 2 parameters that sets the values of the 2 fields. Put in the following toString method
+ 
+public String toString() {
+	String[] names = {};
+	names = list.toArray(names); // "list" is the ArrayList field
+	return "" + NameUtilities.countFirstCharacters(ch, names); // ch is the char field
+}
+ 
+In package assignment03, make a class LengthAverageAnalyzer with 1 private field: an ArrayList of String. Provide a constructor with 1 parameter that sets the value of the field. Put in a toString method that makes an array in the same was as in the toString above and then prints a number using NameUtilities.averageLength
+ 
+In package assignment03, make a classSyllablesAverageAnalyzer with 1 private field: an ArrayList of String. Provide a constructor with 1 parameter that sets the value of the field. Put in a toString method that makes an array in the same was as in the toString above and then prints a number using NameUtilities.averagenumberOfSyllables
+ 
+Make a Driver class with a main method. In the main method, make an ArrayList of Strings called names and in a loop that executes 1000 times, add to names using resources.NamesResource.getRandomFirstName().
+Make an Arraylist of Object called test containing three objects: one each of the three classes FirstCharAnalyzer, LengthAverageAnalyzer, and SyllablesAverageAnalyzer. In the constructors use names for the ArrayList parameter and pick any char you want for the constructor of FirstCharAnalyzer.
+ 
+Print test.
+ 
+You will get different values every time you run this program because of the random name generator but the main point is that even though you have three Object elements in the ArrayList, when you call toString() on each of them, you execute a really different piece of code. That is what happens in polymorphism.

@@ -1,0 +1,72 @@
+Assignment 4
+Due .. October 5, 11:59pm BUT it is all prep for next Thursday's Exam and the following week's exam.
+SO do most of it before Thursday 28th
+ 
+In package assignment04, make a class VariousMethods.
+ 
+Make a method public static int oddEvenCount(long[] arr), which returns how many elements in the array at odd index values (index 1, 3, 5, 7, ...) are even numbers. The return value is -1 if the array is null and 0 if the array is empty or only has length 1.
+ 
+Start a class Driver with a main method that has tests for this method (test the special cases and a longer array).
+ 
+Here is a class BankAccount
+package assignment04;
+public class BankAccount {
+	private double balance;
+	public BankAccount(double initialBalance) {
+		balance = initialBalance;
+	}
+	public void deposit(double amount) {  
+		balance += amount;
+	}
+	public void withdraw(double amount) { 
+		balance -= amount;
+	}
+	public double getBalance() {   
+		return balance;
+	}
+}
+In VariousMethods, write a method public static int minCount(double min, ArrayList<BankAccount> list), which counts how many elements in the list with a balance that is greater than min (-1 if list is null)
+ 
+Add tests for this method to the main method of Driver.
+ 
+Add a private field int id to BankAccount. Add a private field Person customer to BankAccount. Add a private class field private static int nextID to BankAccount.
+ 
+package assignment04;
+import java.time.LocalDate;
+public class Person {
+	private String name;
+	private LocalDate birthdate;
+	public Person(String aName, int day, int month, int year) {
+		name = aName;
+		birthdate = LocalDate.of(year, month, day);
+	}
+	public String getName() {
+		return name;
+	}
+	public LocalDate getBirthdate() {
+		return birthdate;
+	}
+}
+ 
+In the constructor of BankAccount add the line id = ++nextID; (this will give every instance of BankAccount a unique id) and add a method public void setCustomer(Person p) to set the customer field of the BankAccount object.
+ 
+Add getter methods for id and customer to BankAccount.
+ 
+These weird methods are just to sharpen you skills. the exams will not be so complex:
+ 
+In VariousMethods, write a method public static double justAnExercise(double cap, char initial, BankAccount[] arr) which returns the largest balance among the BankAccounts that satisfy one of the following condtions depending on their indices in the array:
+ 
+The array index is a multiple of 3 and the balance of the account is less than cap.
+The array index is 1 greater than a multiple of 3 and the account id is even.
+The array index is 2 greater than a multiple of 3 and the first letter of the String name is the letter initial (independent of upper or lower case)
+ 
+The return value is -1.0 if the array is null or there were not any non-null elements that satisfy the conditions. YES elements of arr can be null.
+Note that the final largest balance may turn out to be greater than or equal to cap, because cap only applies to indices 0, 3, 6, 9, ...
+ 
+Add at least 10 tests to Driver that check diifferent branches of the logic in that method--at least one each where the account comes from an index that has the form 3k, 3k+1 and 3k+2. Remember we had 5 tests in the Slides just for the case of the BankAccount with minimum balance.
+ 
+In VariousMethods, write a method public static int anotherExercise(ArrayList<BankAccount> list) which returns the index in list, where the BankAccount customer with the longest name occurs. If there is a tie, give the LAST index. Return -1 if there is no index because of things being null.
+ 
+Make one test case where the list has a mixture of null elements and where at least two elements have a tie for the longest name.
+ 
+THERE MAY BE SOME MORE, BUT NOT TONIGHT.
